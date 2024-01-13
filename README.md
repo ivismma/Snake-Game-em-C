@@ -13,4 +13,5 @@ cada tecla pressionada, a minhoca em movimento trocava a direção (que é como 
 a velocidade da minhoca se apertar a tecla mais rápido do que a velocidade de execução definida na main (usleep), já que não é possível limpar o buffer de entrada no ncurses
 sem essa função, então preferi deixar na base do I/O mesmo, já que existem métodos para captar a tecla sem necessidade de ENTER, o que faz com que o jogo não fique tão chato, sendo assim, mantive a ideia.<br>
 
+Obs: Para jogar, baixar a pasta Jogo, Jogo.exe depende das DLLs.
 Melhorias serão implementadas periodicamente.
