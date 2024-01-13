@@ -38,3 +38,5 @@ void mostrarInfo();
 Devido a essa última função, aumentar o tamanho no mapa nos #define's pode acabar
 com o mapa misturado com as mensagens, para corrigir, bastante remover essa função
 da main() e apagar os outros mvprintw() acima da chamada da função.
+
+Obs: Para jogar, baixar a pasta Jogo, Jogo.exe depende das DLLs. Melhorias serão implementadas periodicamente.
