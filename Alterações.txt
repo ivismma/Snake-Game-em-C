@@ -1,0 +1,9 @@
+13/01/2024:
+	Adicionado primeira iteração do jogo, jogo incompleto.
+13/01/2024:
+
+- Corrigindo tamanho original do mapa 2D
+	Mapa estava 1 coluna e 1 linha menor do que deveria.
+	Solução: Desconsiderar as paredes (#) do cálculo do desenho
+	         e consequentemente, reposicionar as colisões.
+-----------------------------------------------------------------
