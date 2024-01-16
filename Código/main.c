@@ -7,157 +7,76 @@
 
 #include "header.h"
 
-Consumivel pos; // Variável global - Posição da maçã
+Consumivel pos; // Variável global - Posição atual da maçã
 
-int main() {
+int main(){
 	setlocale(LC_ALL, "pt_BR.UTF-8");
 	// Funções biblioteca ncurses
-    initscr(); 
+    initscr();
     clear();
-    noecho(); 
+    noecho();
     curs_set(0); 
     keypad(stdscr, TRUE); // leitura teclas especiais
-	int direcao = KEY_RIGHT;
-	bool comeu = false;
-	int tamanho = 2; // Tamanho da minhoca, inicia como 2.
-	int cont = -1;
+    
+	int direcao = KEY_DOWN;
+	int anterior = KEY_DOWN;
+	int tamanho = 3; // Tamanho da minhoca, inicia como 3.
+	int cont = 0; // Movimentos
+	// Alocação de memória da minhoca.
 	Minhoca *minhoca = (Minhoca*) calloc(WIDTH*HEIGHT, sizeof(Minhoca));
 	if(minhoca == NULL){
 		endwin();
 		fprintf(stderr, "Falha na alocação de memória.\n");
 		return -1;
 	}
+	
 	inicializarMinhoca(minhoca);
 	Consumivel pos = gerarConsumivel(minhoca, tamanho);
     
+    // Loop do jogo.
 	while(1) {
-		++cont;
-		// Desenhar parede, minhoca, atualizar tela
-        clear();
+		clear();
 		desenharParedes();
-		
 		desenharConsumivel(pos);
-		mvprintw(minhoca->y, minhoca->x, "0"); // Cabeça
 		desenharMinhoca(minhoca, tamanho); // Segmentos
 		
-		mvprintw(13,1,"Info. úteis para teste:");
-		mvprintw(15,1,"Movimentos: %d", cont);
-		mvprintw(16,1,"Tamanho:    %d (Cabeça + %d segmentos)", tamanho, tamanho-1);
-		mvprintw(18,1,"Rabo da minhoca: (%d,%d)", minhoca[tamanho-1].x, minhoca[tamanho-1].y);
-		mvprintw(19,1,"Cabeça: (%d,%d)", minhoca->x, minhoca->y);
-		mvprintw(20,1,"Posição da comida: (%d,%d)", pos.x, pos.y);
-		mvprintw(26,1,"Memória alocada (*minhoca): %zu bytes.", (WIDTH*HEIGHT-1)*sizeof(minhoca));
 		mostrarInfo();
+		mostrarInfoStats(minhoca, tamanho, cont);
         
-        refresh();
-        
+		refresh(); // Atualizar tela.
+		
         // Capturar movimento
 		int tecla = getch();
-		// Proteção contra entrada inválida, fazendo com que a minhoca atravesse paredes e
-		// e tenha um movimento inconsistente.
-		if(tecla != KEY_UP && tecla != KEY_DOWN &&
-		tecla != KEY_LEFT && tecla != KEY_RIGHT) continue;
-		
+		if(!checaMovimento(anterior, tecla)) continue; // Evitar minhoca de ir contra si mesmo.
+		anterior = tecla;
+		++cont; // Movs.
 		usleep(10000);  // microsegundos
 		
-		switch (tecla) {
-            case KEY_UP:
-                if(checaColisao(minhoca, minhoca->x, minhoca->y-1)){
-                	atualizarMinhoca(minhoca, &tamanho);
-					minhoca->y += HEIGHT-1;
-					goto checarSeComeu;
-					// Esse goto possui a mesma função do "continue;", exceto que ele verifica se a
-					// minhoca comeu antes de ir para próxima iteração do jogo.
-				}
-				else{
-					direcao = KEY_UP;
-                	break;
-				}
-            case KEY_DOWN:
-            	if(checaColisao(minhoca, minhoca->x, minhoca->y+1)){
-            		atualizarMinhoca(minhoca, &tamanho);
-					minhoca->y -= HEIGHT-1;
-					goto checarSeComeu;
-				}
-				else{
-					direcao = KEY_DOWN;
-                	break;
-				}
-            case KEY_LEFT:
-            	if(checaColisao(minhoca, minhoca->x-1, minhoca->y)){
-            		atualizarMinhoca(minhoca, &tamanho);
-					minhoca->x += WIDTH-1;
-					goto checarSeComeu;
-				}
-				else{
-					direcao = KEY_LEFT;
-                	break;
-				}
-            case KEY_RIGHT:
-            	if(checaColisao(minhoca, minhoca->x+1, minhoca->y)){
-            		atualizarMinhoca(minhoca, &tamanho);
-					minhoca->x -= WIDTH-1;
-					goto checarSeComeu;
-				}
-				else{
-					direcao = KEY_RIGHT;
-                	break;
-				}
-        }
+		// Posição do rabo (tail) da minhoca:
+		int tailX = minhoca[tamanho-1].x;
+		int tailY = minhoca[tamanho-1].y;
 		
-        // Atualizar a posição da minhoca com base na direção
-        switch (direcao) {
-            case KEY_UP:
-				atualizarMinhoca(minhoca, &tamanho);
-				--(minhoca->y);
-				if(checaMorte(minhoca, tamanho)){
-					free(minhoca);
-    				endwin();
-    				printf("Minhoca morreu :(\n");
-					getch();
-					return 0;
-				}
-                break;
-            case KEY_DOWN:
-            	atualizarMinhoca(minhoca, &tamanho);
-            	++(minhoca->y);
-            	if(checaMorte(minhoca, tamanho)){
-					free(minhoca);
-    				endwin();
-    				printf("Minhoca morreu :(\n");
-    				getch();
-					return 0;
-				}
-                break;
-            case KEY_LEFT:
-            	atualizarMinhoca(minhoca, &tamanho);
-            	--(minhoca->x);
-            	if(checaMorte(minhoca, tamanho)){
-					free(minhoca);
-    				endwin();
-    				printf("Minhoca morreu :(\n");
-    				getch();
-					return 0;
-				}
-                break;
-            case KEY_RIGHT:
-            	atualizarMinhoca(minhoca, &tamanho);
-            	++(minhoca->x);
-            	if(checaMorte(minhoca, tamanho)){
-					free(minhoca);
-    				endwin();
-    				printf("Minhoca morreu :(\n");
-					getch();
-					return 0;
-				}
-                break;
+		// Computar tecla e verificar se próximo movimento ocorreu colisão com parede.
+		bool colidiu = false;
+		colidiu = preComputarMovimento(tecla, minhoca, tamanho, &direcao);
+		
+		if(!colidiu) movimentoNormal(direcao, minhoca, tamanho);
+	    
+		
+		// Checar se a minhoca morreu após o movimento efetuado.
+	    if(checaMorte(minhoca, tamanho)) {
+	        free(minhoca);
+	        endwin();
+	        printf("Minhoca morreu :(\n");
+	        getch();
+	        return 0;
+    	}
+    	
+		// Checar se a minhoca comeu a maçã com o movimento efetuado.
+    	if(checaSeComeu(minhoca, pos)){
+        	crescerMinhoca(minhoca, &tamanho, tailX, tailY);
+        	pos = gerarConsumivel(minhoca, tamanho);
         }
-        // goto com a função do continue, porém, verificar antes se a minhoca comeu.
-        checarSeComeu:
-	    if (checaSeComeu(minhoca, pos)){
-			crescerMinhoca(minhoca, &tamanho);
-			pos = gerarConsumivel(minhoca, tamanho);
-		}
 	}
     
     return 0;

@@ -1,37 +1,61 @@
-#include "header.h"
+// Funções que gerenciam a minhoca.
+
 #include <ncurses/ncurses.h>
+#include "header.h"
+
 
 void inicializarMinhoca(Minhoca *minhoca){
-	// Inicializa a minhoca com uma cabeça e uma parte.
+	// Inicializa a minhoca com uma cabeça dois segmentos.
 	minhoca->x = WIDTH/2;
-    minhoca->y = HEIGHT/2;
+    minhoca->y = 1+HEIGHT/2;
 	minhoca[1].x = minhoca->x; 
 	minhoca[1].y = minhoca->y-1;
+	minhoca[2].x = minhoca->x; 
+	minhoca[2].y = minhoca->y-2;
 }
 
 void desenharMinhoca(Minhoca *minhoca, int tam){
+	// Desenhar cabeça e em seguida, os segmentos da minhoca no vetor dinâmico.
 	mvprintw(minhoca->y, minhoca->x, "0");
 	for(int i = 1; i < tam; ++i)
 		mvprintw((minhoca+i)->y, (minhoca+i)->x, "O");
 }
 
-// x, y correspondem à posição atual que se encontrava a cabeça da minhoca.
-void atualizarMinhoca(Minhoca *minhoca, int *tam){
-	for (int i = *tam - 1; i > 0; --i)
+void atualizarMinhoca(Minhoca *minhoca, int tam){
+	// Computar trajetória da minhoca.
+	for (int i = tam-1; i > 0; --i)
         minhoca[i] = minhoca[i-1];
-	// Atualizando a cabeça da minhoca
-    // Verificar se a minhoca comeu a maçã, se sim, aumentar seu tamanho.
     refresh();
 }
 
 bool checaSeComeu(Minhoca* minhoca, Consumivel pos){
+	// Se cabeça tocou a maçã...
 	if(minhoca->x == pos.x && minhoca->y == pos.y)
 		return true;
 	return false; 
 }
 
-void crescerMinhoca(Minhoca *minhoca, int *tam){
-	++(*tam);
-	minhoca[*tam-1].x = minhoca[*tam-2].x;
-    minhoca[*tam-1].y = minhoca[*tam-2].y;
+void crescerMinhoca(Minhoca *minhoca, int *tam, int x, int y){
+	// Novo segmento da minhoca recebe pos. do anterior rabo da minhoca.
+	minhoca[*tam].x = x;
+    minhoca[*tam].y = y;
+    ++(*tam);
+}
+
+bool checaMovimento(int anterior, int atual){
+	// Verificar se a entrada é válida.
+	if(atual != KEY_UP && atual != KEY_DOWN && atual !=
+	KEY_LEFT && atual != KEY_RIGHT) return false;
+	
+	// Verificar se a minhoca está tentando ir contra ela mesma.
+	if(anterior == KEY_UP && atual == KEY_DOWN)
+		return false;
+	else if(anterior == KEY_DOWN && atual == KEY_UP)
+		return false;
+	else if(anterior == KEY_LEFT && atual == KEY_RIGHT)
+		return false;
+	else if(anterior == KEY_RIGHT && atual == KEY_LEFT)
+		return false;
+	
+	return true; // O movimento é válido.
 }
