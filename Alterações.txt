@@ -7,7 +7,7 @@
 	Solução: Desconsiderar as paredes (#) do cálculo do desenho
 	         e consequentemente, reposicionar as colisões.
 -----------------------------------------------------------------
-16/01/2024:
+15/01/2024:
 - Refeito sistema da minhoca, agora a cabeça também faz parte da memória
 alocada (*minhoca) e a cabeça é representada pelo índice zero do vetor.
 - Adicionado sistema de geração da comida, que cresce o tamanho da minhoca.
@@ -20,3 +20,12 @@ Setas do teclado).
 - Revisão e melhoria de algumas funções e linhas de código.
 - Modularização do programa.
 (main.c, jogo.c, header.h).
+
+16/01/2024:
+- Melhoria massiva na organização do código, incluindo diminuição de linhas de código na main() por evidenciação de chamadas
+de funções.
+- Melhoria na modularização do código.
+- Resolvido problema em que a minhoca não morreria se colidisse com a parede na situação em que troca de lado no mapa 
+(transferência de lado por colisão com parede)
+- Resolvido problema em que minhoca poderia se movimentar contra a direção que estava, causando morte da minhoca - Solução: Implementação bônus no sistema de teste de input válido: Criação de variável que armazena movimento anterior adicionado para solução do problema.
+- Novo arquivo de funções (movimento.c) que gerenciam movimento da minhoca.
