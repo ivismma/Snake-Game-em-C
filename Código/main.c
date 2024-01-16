@@ -43,7 +43,6 @@ int main(){
 		mostrarInfo();
 		mostrarInfoStats(minhoca, tamanho, cont);
         
-		refresh(); // Atualizar tela.
 		
         // Capturar movimento
 		int tecla = getch();
@@ -77,6 +76,8 @@ int main(){
         	crescerMinhoca(minhoca, &tamanho, tailX, tailY);
         	pos = gerarConsumivel(minhoca, tamanho);
         }
+        refresh(); // Atualizar tela.
+        
 	}
     
     return 0;
