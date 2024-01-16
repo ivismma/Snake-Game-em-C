@@ -1,5 +1,5 @@
-// Tamanho: Pequeno: 14 e 5, Médio: 20 e 6, Grande: 25 e 7.
-// Default: Médio
+// Tamanho: Pequeno: 14 e 5, MÃ©dio: 20 e 6, Grande: 25 e 7.
+// Default: MÃ©dio
 #define WIDTH 20   // Tam Horizontal
 #define HEIGHT 6   // Tam Vertical
 
@@ -8,14 +8,13 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <locale.h>
-#include <time.h>
 #include "header.h"
 
-Consumivel pos; // Posição da maçã - Variável global.
+Consumivel pos; // PosiÃ§Ã£o da maÃ§Ã£ - VariÃ¡vel global.
 
 int main() {
 	setlocale(LC_ALL, "pt_BR.UTF-8");
-	// Funções biblioteca ncurses
+	// FunÃ§Ãµes biblioteca ncurses
     initscr(); 
     clear();
     noecho(); 
@@ -28,7 +27,7 @@ int main() {
 	Minhoca *minhoca = (Minhoca*) calloc(WIDTH*HEIGHT, sizeof(Minhoca));
 	if(minhoca == NULL){
 		endwin();
-		fprintf(stderr, "Falha na alocação de memória.\n");
+		fprintf(stderr, "Falha na alocaÃ§Ã£o de memÃ³ria.\n");
 		return -1;
 	}
 	inicializarMinhoca(minhoca);
@@ -41,23 +40,23 @@ int main() {
 		desenharParedes();
 		
 		desenharConsumivel(pos);
-		mvprintw(minhoca->y, minhoca->x, "0"); // Cabeça
+		mvprintw(minhoca->y, minhoca->x, "0"); // CabeÃ§a
 		desenharMinhoca(minhoca, tamanho); // Segmentos
 		
-		mvprintw(13,1,"Info. úteis para teste:");
+		mvprintw(13,1,"Info. Ãºteis para teste:");
 		mvprintw(15,1,"Movimentos: %d", cont);
-		mvprintw(16,1,"Tamanho:    %d (Cabeça + %d segmentos)", tamanho, tamanho-1);
+		mvprintw(16,1,"Tamanho:    %d (CabeÃ§a + %d segmentos)", tamanho, tamanho-1);
 		mvprintw(18,1,"Rabo da minhoca: (%d,%d)", minhoca[tamanho-1].x, minhoca[tamanho-1].y);
-		mvprintw(19,1,"Cabeça: (%d,%d)", minhoca->x, minhoca->y);
-		mvprintw(20,1,"Posição da comida: (%d,%d)", pos.x, pos.y);
-		mvprintw(26,1,"Memória alocada (*minhoca): %zu bytes.", (WIDTH*HEIGHT-1)*sizeof(minhoca));
+		mvprintw(19,1,"CabeÃ§a: (%d,%d)", minhoca->x, minhoca->y);
+		mvprintw(20,1,"PosiÃ§Ã£o da comida: (%d,%d)", pos.x, pos.y);
+		mvprintw(26,1,"MemÃ³ria alocada (*minhoca): %zu bytes.", (WIDTH*HEIGHT-1)*sizeof(minhoca));
 		mostrarInfo();
         
         refresh();
         
         // Capturar movimento
 		int tecla = getch();
-		// Proteção contra entrada inválida, fazendo com que a minhoca atravesse paredes e
+		// ProteÃ§Ã£o contra entrada invÃ¡lida, fazendo com que a minhoca atravesse paredes e
 		// e tenha um movimento inconsistente.
 		if(tecla != KEY_UP && tecla != KEY_DOWN &&
 		tecla != KEY_LEFT && tecla != KEY_RIGHT) continue;
@@ -70,8 +69,8 @@ int main() {
                 	atualizarMinhoca(minhoca, &tamanho);
 					minhoca->y += HEIGHT-1;
 					goto checarSeComeu;
-					// Esse goto possui a mesma função do "continue;", exceto que ele verifica se a
-					// minhoca comeu antes de ir para próxima iteração do jogo.
+					// Esse goto possui a mesma funÃ§Ã£o do "continue;", exceto que ele verifica se a
+					// minhoca comeu antes de ir para prÃ³xima iteraÃ§Ã£o do jogo.
 				}
 				else{
 					direcao = KEY_UP;
@@ -109,7 +108,7 @@ int main() {
 				}
         }
 		
-        // Atualizar a posição da minhoca com base na direção
+        // Atualizar a posiÃ§Ã£o da minhoca com base na direÃ§Ã£o
         switch (direcao) {
             case KEY_UP:
 				atualizarMinhoca(minhoca, &tamanho);
@@ -156,7 +155,7 @@ int main() {
 				}
                 break;
         }
-        // goto com a função do continue, porém, verificar antes se a minhoca comeu.
+        // goto com a funÃ§Ã£o do continue, porÃ©m, verificar antes se a minhoca comeu.
         checarSeComeu:
 	    if (checaSeComeu(minhoca, pos)){
 			crescerMinhoca(minhoca, &tamanho);
