@@ -25,10 +25,10 @@ Setas do teclado).
 - Melhoria massiva na organização do código, incluindo diminuição de linhas de código na main() por evidenciação de chamadas
 de funções.
 - Melhoria na modularização do código.
-- Resolvido problema em que a minhoca não morreria se colidisse com a parede na situação em que troca de lado no mapa 
-(transferência de lado por colisão com parede)
+- Resolvido problema em que a minhoca não morreria se colidisse com si mesma na situação em que troca de lado por movimentação 
+entre paredes e colisão com um de seus segmentos (transferência de lado por colisão com parede).
 - Resolvido problema em que minhoca poderia se movimentar contra a direção que estava, causando morte da minhoca - Solução: Implementação bônus 
-no sistema de teste de input válido: Criação de variável que armazena movimento anterior adicionado para solução do problema.
+no sistema de teste de input válido (checaMovimento() ) e criação de variável na main() que armazena movimento anterior adicionado para solução do problema.
 - Novo arquivo de funções (movimento.c) que gerenciam movimento da minhoca.
 - Movido refresh() p/ fim do loop do jogo na main(), agora o jogo está com atualização visual 
 consistente, todas as "piscadas" na tela foram solucionadas.
