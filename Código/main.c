@@ -7,11 +7,11 @@
 
 #include "header.h"
 
-Consumivel pos; // Vari�vel global - Posi��o atual da ma��
+Consumivel pos; // Variável global - Posição atual da maçã
 
 int main(){
 	setlocale(LC_ALL, "pt_BR.UTF-8");
-	// Fun��es biblioteca ncurses
+	// Funções biblioteca ncurses
     initscr();
     clear();
     noecho();
@@ -22,11 +22,11 @@ int main(){
 	int anterior = KEY_DOWN;
 	int tamanho = 3; // Tamanho da minhoca, inicia como 3.
 	int cont = 0; // Movimentos
-	// Aloca��o de mem�ria da minhoca.
+	// Alocação de memória da minhoca.
 	Minhoca *minhoca = (Minhoca*) calloc(WIDTH*HEIGHT, sizeof(Minhoca));
 	if(minhoca == NULL){
 		endwin();
-		fprintf(stderr, "Falha na aloca��o de mem�ria.\n");
+		fprintf(stderr, "Falha na alocação de memória.\n");
 		return -1;
 	}
 	
@@ -42,27 +42,27 @@ int main(){
 		
 		mostrarInfo();
 		mostrarInfoStats(minhoca, tamanho, cont);
-        
 		
-        // Capturar movimento
-		int tecla = getch();
-		if(!checaMovimento(anterior, tecla)) continue; // Evitar minhoca de ir contra si mesmo.
+		// Captar movimento:
+		int tecla;
+		do tecla = getch(); // Enquanto movimento for inválido.
+		while(!checaMovimento(anterior, tecla)); 
+		
 		anterior = tecla;
 		++cont; // Movs.
 		usleep(10000);  // microsegundos
 		
-		// Posi��o do rabo (tail) da minhoca:
+		// Posição do rabo (tail) da minhoca:
 		int tailX = minhoca[tamanho-1].x;
 		int tailY = minhoca[tamanho-1].y;
 		
-		// Computar tecla e verificar se pr�ximo movimento ocorreu colis�o com parede.
+		// Computar tecla e verificar se próximo movimento ocorreu colisão com parede.
 		bool colidiu = false;
 		colidiu = preComputarMovimento(tecla, minhoca, tamanho, &direcao);
 		
 		if(!colidiu) movimentoNormal(direcao, minhoca, tamanho);
-	    
 		
-		// Checar se a minhoca morreu ap�s o movimento efetuado.
+		// Checar se a minhoca morreu após o movimento efetuado.
 	    if(checaMorte(minhoca, tamanho)) {
 	        free(minhoca);
 	        endwin();
@@ -71,13 +71,12 @@ int main(){
 	        return 0;
     	}
     	
-		// Checar se a minhoca comeu a ma�� com o movimento efetuado.
+		// Checar se a minhoca comeu a maçã com o movimento efetuado.
     	if(checaSeComeu(minhoca, pos)){
         	crescerMinhoca(minhoca, &tamanho, tailX, tailY);
         	pos = gerarConsumivel(minhoca, tamanho);
         }
-        refresh(); // Atualizar tela.
-        
+        refresh(); // Atualizar tela
 	}
     
     return 0;
