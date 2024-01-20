@@ -23,7 +23,7 @@ void desenharMinhoca(Minhoca *minhoca, int tam){
 
 void atualizarMinhoca(Minhoca *minhoca, int tam){
 	// Computar trajetória da minhoca.
-	for (int i = tam-1; i > 0; minhoca[i--] = minhoca[i] );
+	for(int i = tam-1; i > 0; minhoca[i--] = minhoca[i] );
 }
 
 bool checaSeComeu(Minhoca* minhoca, Consumivel pos){
