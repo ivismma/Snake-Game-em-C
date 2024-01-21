@@ -32,3 +32,10 @@ no sistema de teste de input válido (checaMovimento() ) e criação de variáve
 - Novo arquivo de funções (movimento.c) que gerenciam movimento da minhoca.
 - Movido refresh() p/ fim do loop do jogo na main(), agora o jogo está com atualização visual 
 consistente, todas as "piscadas" na tela foram solucionadas.
+
+21/01/2024:
+- Criado sistema de reinício do jogo com menu de escolha.
+- Criado novo arquivo (HUD.c) que contém as funções de exibição de interface textual (Estatísticas do jogo)
+- Criada variável tamanhoM que contém o tamanho máximo atingido nas rodadas, exibida no HUD. Também servirá para mostrar
+o quanto da memória alocada já foi ocupada (utilizada) por partes da minhoca.
+- Melhorias em funções existentes.
