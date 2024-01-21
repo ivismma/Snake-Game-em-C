@@ -56,8 +56,9 @@ void desenharConsumivel(Consumivel pos){
 	mvprintw(pos.y,pos.x, "-");
 }
 
-void reiniciaJogo(Minhoca *minhoca, int *tamanho, int *cont){
+void reiniciaJogo(Minhoca *minhoca, int *tamanho, int *cont, int *ant){
 	inicializarMinhoca(minhoca);
+	*ant = KEY_DOWN; // Resetar dir. inicial para impedir de ir contra si mesma após reinício.
 	*tamanho = 3;
 	*cont = 0;
 	pos = gerarConsumivel(minhoca, *tamanho);

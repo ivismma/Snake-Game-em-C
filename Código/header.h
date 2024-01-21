@@ -33,4 +33,4 @@ void mostrarInfo();
 void mostrarInfoStats(Minhoca *minhoca, int tamanho, int tamanhoM, int cont);
 void mostrarMenu();
 bool selecionar();
-void reiniciaJogo(Minhoca *minhoca, int *tamanho, int *cont);
+void reiniciaJogo(Minhoca *minhoca, int *tamanho, int *cont, int *ant);
