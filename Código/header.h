@@ -30,4 +30,7 @@ void crescerMinhoca(Minhoca *minhoca, int *tam, int x, int y);
 bool preComputarMovimento(int tecla, Minhoca *minhoca, int tamanho, int *direcao);
 void movimentoNormal(int direcao, Minhoca *minhoca, int tamanho);
 void mostrarInfo();
-void mostrarInfoStats(Minhoca *minhoca, int tamanho, int cont);
+void mostrarInfoStats(Minhoca *minhoca, int tamanho, int tamanhoM, int cont);
+void mostrarMenu();
+bool selecionar();
+void reiniciaJogo(Minhoca *minhoca, int *tamanho, int *cont);

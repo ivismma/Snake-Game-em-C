@@ -56,25 +56,9 @@ void desenharConsumivel(Consumivel pos){
 	mvprintw(pos.y,pos.x, "-");
 }
 
-void mostrarInfo(){
-	mvprintw(0,34,"Em desenvolvimento...");
-	mvprintw(2,34,"Implementações que ainda faltam:");
-	mvprintw(4,34,"Reinício da rodada após morte, sistema de pontuação, mensagem de fim de jogo.");
-	mvprintw(5,34,"adicionar sons de efeito (SFX) e outros.");
-	
-	mvprintw(8,34,"Implementações já criadas:");
-	mvprintw(10,34,"Geração do mapa, Geração da maçã, definição de paredes, colisão, ");
-	mvprintw(11,34,"transferir minhoca para lado oposto da colisão, proteção p/ entrada inválida, ");
-	mvprintw(12,34,"impedir minhoca de poder andar para sentido contrário (morte), ");
-	mvprintw(13,34,"e sistema que controla a trajetória da minhoca (Vetor alocado dinamicamente).");
-}
-
-void mostrarInfoStats(Minhoca *minhoca, int tamanho, int cont){
-	mvprintw(13,1,"Info. úteis para teste:");
-	mvprintw(15,1,"Movimentos: %d", cont);
-	mvprintw(16,1,"Tamanho:    %d (Cabeça + %d segmentos)", tamanho, tamanho-1);
-	mvprintw(18,1,"Rabo da minhoca: (%d,%d)", minhoca[tamanho-1].x, minhoca[tamanho-1].y);
-	mvprintw(19,1,"Cabeça: (%d,%d)", minhoca->x, minhoca->y);
-	mvprintw(20,1,"Posição da comida: (%d,%d)", pos.x, pos.y);
-	mvprintw(26,1,"Memória alocada (*minhoca): %zu bytes.", (WIDTH*HEIGHT-1)*sizeof(minhoca));
+void reiniciaJogo(Minhoca *minhoca, int *tamanho, int *cont){
+	inicializarMinhoca(minhoca);
+	*tamanho = 3;
+	*cont = 0;
+	pos = gerarConsumivel(minhoca, *tamanho);
 }

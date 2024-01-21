@@ -1,11 +1,11 @@
-// Fun√ß√µes que gerenciam a minhoca.
+// FunÁıes que gerenciam a minhoca.
 
 #include <ncurses/ncurses.h>
 #include "header.h"
 
 
 void inicializarMinhoca(Minhoca *minhoca){
-	// Inicializa a minhoca com uma cabe√ßa dois segmentos.
+	// Inicializa a minhoca com uma cabeÁa dois segmentos.
 	minhoca->x = WIDTH/2;
     minhoca->y = 1+HEIGHT/2;
 	minhoca[1].x = minhoca->x; 
@@ -15,19 +15,19 @@ void inicializarMinhoca(Minhoca *minhoca){
 }
 
 void desenharMinhoca(Minhoca *minhoca, int tam){
-	// Desenhar cabe√ßa e em seguida, os segmentos da minhoca no vetor din√¢mico.
+	// Desenhar cabeÁa e em seguida, os segmentos da minhoca no vetor din‚mico.
 	mvprintw(minhoca->y, minhoca->x, "0");
 	for(int i = 1; i < tam; ++i)
 		mvprintw((minhoca+i)->y, (minhoca+i)->x, "O");
 }
 
 void atualizarMinhoca(Minhoca *minhoca, int tam){
-	// Computar trajet√≥ria da minhoca.
-	for(int i = tam-1; i > 0; minhoca[i--] = minhoca[i] );
+	// Computar trajetÛria da minhoca.
+	for (int i = tam-1; i > 0; minhoca[i--] = minhoca[i]);
 }
 
 bool checaSeComeu(Minhoca* minhoca, Consumivel pos){
-	// Se cabe√ßa tocou a ma√ß√£...
+	// Se cabeÁa tocou a maÁ„...
 	if(minhoca->x == pos.x && minhoca->y == pos.y)
 		return true;
 	return false; 
@@ -38,22 +38,4 @@ void crescerMinhoca(Minhoca *minhoca, int *tam, int x, int y){
 	minhoca[*tam].x = x;
     minhoca[*tam].y = y;
     ++(*tam);
-}
-
-bool checaMovimento(int anterior, int atual){
-	// Verificar se a entrada √© v√°lida.
-	if(atual != KEY_UP && atual != KEY_DOWN && atual !=
-	KEY_LEFT && atual != KEY_RIGHT) return false;
-	
-	// Verificar se a minhoca est√° tentando ir contra ela mesma.
-	if(anterior == KEY_UP && atual == KEY_DOWN)
-		return false;
-	else if(anterior == KEY_DOWN && atual == KEY_UP)
-		return false;
-	else if(anterior == KEY_LEFT && atual == KEY_RIGHT)
-		return false;
-	else if(anterior == KEY_RIGHT && atual == KEY_LEFT)
-		return false;
-	
-	return true; // O movimento √© v√°lido.
 }

@@ -1,6 +1,5 @@
 // Funções que gerenciam o input do jogo e diretivas de movimentação da minhoca.
 
-
 #include <stdbool.h>
 #include <ncurses/ncurses.h>
 
@@ -64,4 +63,22 @@ void movimentoNormal(int direcao, Minhoca *minhoca, int tamanho){
 	        break;
 	}
 	return;
+}
+
+bool checaMovimento(int anterior, int atual){
+	// Verificar se a entrada é válida.
+	if(atual != KEY_UP && atual != KEY_DOWN && atual !=
+	KEY_LEFT && atual != KEY_RIGHT) return false;
+	
+	// Verificar se a minhoca está tentando ir contra ela mesma.
+	if(anterior == KEY_UP && atual == KEY_DOWN)
+		return false;
+	else if(anterior == KEY_DOWN && atual == KEY_UP)
+		return false;
+	else if(anterior == KEY_LEFT && atual == KEY_RIGHT)
+		return false;
+	else if(anterior == KEY_RIGHT && atual == KEY_LEFT)
+		return false;
+	
+	return true; // O movimento é válido.
 }
