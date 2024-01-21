@@ -39,3 +39,10 @@ consistente, todas as "piscadas" na tela foram solucionadas.
 - Criada variável tamanhoM que contém o tamanho máximo atingido nas rodadas, exibida no HUD. Também servirá para mostrar
 o quanto da memória alocada já foi ocupada (utilizada) por partes da minhoca.
 - Melhorias em funções existentes.
+
+...
+
+- Corrigido bug em que minhoca poderia se movimentar contra si mesmo e morrer após reinício da partida, bug solucionado.
+Solução: Atualizar direção da posição inicial com a função reiniciaJogo() dando endereço da variável 'anterior'.
+- Melhoria: Função que verifica se (tamanho > tamanhoM) movida para dentro do if(checaSeComeu) para evitar checagem de
+if() desnecessário caso a minhoca morra.
