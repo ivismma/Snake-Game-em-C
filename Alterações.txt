@@ -22,8 +22,8 @@ Setas do teclado).
 (main.c, jogo.c, header.h).
 
 16/01/2024:
-- Melhoria massiva na organização do código, incluindo diminuição de linhas de código na main() por evidenciação de chamadas
-de funções.
+- Melhoria massiva na organização do código, incluindo diminuição de linhas de código na main(), por colocação de várias chamadas
+de funções em evidência.
 - Melhoria na modularização do código.
 - Resolvido problema em que a minhoca não morreria se colidisse com si mesma na situação em que troca de lado por movimentação 
 entre paredes e colisão com um de seus segmentos (transferência de lado por colisão com parede).
