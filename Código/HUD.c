@@ -1,4 +1,4 @@
-// FunÁıes que gerenciam a interface textual do jogo.
+// Fun√ß√µes que gerenciam a interface textual do jogo.
 
 #include <ncurses/ncurses.h>
 
@@ -11,28 +11,28 @@
 
 void mostrarInfo(){
 	mvprintw(0,34,"Em desenvolvimento...");
-	mvprintw(2,34,"ImplementaÁıes que ainda faltam:");
+	mvprintw(2,34,"Implementa√ß√µes que ainda faltam:");
 	mvprintw(4,34,"adicionar sons de efeito (SFX) e outros.");
 	
-	mvprintw(7,34,"ImplementaÁıes j· criadas:");
-	mvprintw(9,34,"GeraÁ„o do mapa, GeraÁ„o da maÁ„, definiÁ„o de paredes, colis„o, ");
-	mvprintw(10,34,"transferir minhoca para lado oposto da colis„o, proteÁ„o p/ entrada inv·lida, ");
-	mvprintw(11,34,"impedir minhoca de poder andar para sentido contr·rio (morte), ");
-	mvprintw(12,34,"reinÌcio da rodada apÛs morte, sistema de pontuaÁ„o, mensagem de fim de jogo");
-	mvprintw(13,34,"e sistema que controla a trajetÛria da minhoca (Vetor alocado dinamicamente).");
+	mvprintw(7,34,"Implementa√ß√µes j√° criadas:");
+	mvprintw(9,34,"Gera√ß√£o do mapa, Gera√ß√£o da ma√ß√£, defini√ß√£o de paredes, colis√£o, ");
+	mvprintw(10,34,"transferir minhoca para lado oposto da colis√£o, prote√ß√£o p/ entrada inv√°lida, ");
+	mvprintw(11,34,"impedir minhoca de poder andar para sentido contr√°rio (morte), ");
+	mvprintw(12,34,"rein√≠cio da rodada ap√≥s morte, sistema de pontua√ß√£o, mensagem de fim de jogo");
+	mvprintw(13,34,"e sistema que controla a trajet√≥ria da minhoca (Vetor alocado dinamicamente).");
 }
 
 void mostrarInfoStats(Minhoca *minhoca, int tamanho, int tamanhoM, int cont){
-	mvprintw(13,1,"Info. ˙teis para teste:");
+	mvprintw(13,1,"Info. √∫teis para teste:");
 	mvprintw(15,1,"Movimentos: %d", cont);
-	mvprintw(16,1,"Tamanho:    %d (CabeÁa + %d segmentos)", tamanho, tamanho-1);
+	mvprintw(16,1,"Tamanho:    %d (Cabe√ßa + %d segmentos)", tamanho, tamanho-1);
 	mvprintw(18,1,"Rabo da minhoca: (%d,%d)", minhoca[tamanho-1].x, minhoca[tamanho-1].y);
-	mvprintw(19,1,"CabeÁa: (%d,%d)", minhoca->x, minhoca->y);
-	mvprintw(20,1,"PosiÁ„o da comida: (%d,%d)", pos.x, pos.y);
-	mvprintw(21,1,"------------------------", tamanhoM);
-	mvprintw(23,1,"Tamanho m·ximo atingido: %d", tamanhoM);
-	mvprintw(26,1,"MemÛria alocada (*minhoca):   %zu bytes.", (WIDTH*HEIGHT)*sizeof(minhoca));
-	mvprintw(27,1,"MemÛria utilizada (*minhoca): %zu bytes.", tamanhoM*sizeof(minhoca));
+	mvprintw(19,1,"Cabe√ßa: (%d,%d)", minhoca->x, minhoca->y);
+	mvprintw(20,1,"Posi√ß√£o da comida: (%d,%d)", pos.x, pos.y);
+	mvprintw(21,1,"------------------------");
+	mvprintw(23,1,"Tamanho m√°ximo atingido: %d", tamanhoM);
+	mvprintw(26,1,"Mem√≥ria alocada (*minhoca):   %zu bytes.", (WIDTH*HEIGHT)*sizeof(minhoca));
+	mvprintw(27,1,"Mem√≥ria utilizada (*minhoca): %zu bytes.", tamanhoM*sizeof(minhoca));
 }
 
 void mostrarMenu(){
@@ -43,7 +43,7 @@ void mostrarMenu(){
 	
 	mvprintw(1, C/2, "Deseja jogar novamente?");
 	mvprintw(INICIO, L/2-1, "Sim");
-	mvprintw(INICIO+1, L/2-1, "N„o");
+	mvprintw(INICIO+1, L/2-1, "N√£o");
 }
 
 bool selecionar(){
