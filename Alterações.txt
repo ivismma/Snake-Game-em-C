@@ -45,4 +45,4 @@ o quanto da memória alocada já foi ocupada (utilizada) por partes da minhoca.
 - Corrigido bug em que minhoca poderia se movimentar contra si mesmo e morrer após reinício da partida, bug solucionado.
 Solução: Atualizar direção da posição inicial com a função reiniciaJogo() dando endereço da variável 'anterior'.
 - Melhoria: Função que verifica se (tamanho > tamanhoM) movida para dentro do if(checaSeComeu) para evitar checagem de
-if() desnecessário caso a minhoca morra.
+if() desnecessário caso a minhoca morra ou se a minhoca não comer.
