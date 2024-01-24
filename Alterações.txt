@@ -46,3 +46,15 @@ o quanto da memória alocada já foi ocupada (utilizada) por partes da minhoca.
 Solução: Atualizar direção da posição inicial com a função reiniciaJogo() dando endereço da variável 'anterior'.
 - Melhoria: Função que verifica se (tamanho > tamanhoM) movida para dentro do if(checaSeComeu) para evitar checagem de
 if() desnecessário caso a minhoca morra ou se a minhoca não comer.
+
+24/01/2024:
+- Criado Menu de seleção inicial do tamanho do mapa antes do jogo
+ > O menu exibe a prévia do tamanho do mapa selecionado no momento.
+- Redefinido a constante de pré-processamento WIDTH e LENGHT para variáveis globais a fim de
+possibilitar a escolha do tamanho do mapa (e diversas outras alterações para melhorar o código).
+- Diversas melhorias no código e organização, incluindo novas constantes de pré-processamento (em "HUD.c") e
+removidas as constantes de pré-processamento no "header.h".
+- Funções criadas: mostrarMenu() e selecionarMenu() no HUD.c
+- Renomeadas as funções do menu de reinício da partida.
+
+Jogo basicamente finalizado.
