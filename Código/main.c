@@ -7,10 +7,15 @@
 
 #include "header.h"
 
-Consumivel pos; // Variável global - Posição atual da maçã
+// Variáveis globais
+Consumivel pos; //Posição atual da maçã
+int WIDTH = 14; // Comprimento
+int HEIGHT = 5; // Largura
 
 int main(){
 	setlocale(LC_ALL, "pt_BR.UTF-8");
+	// ACENTOS E CEDILHAS FUNCIONARÃO DEPENDER DO S.O USADO E OUTROS FATORES.
+	
 	// Funções biblioteca ncurses
     initscr();
     clear();
@@ -31,9 +36,10 @@ int main(){
 		fprintf(stderr, "Falha na alocação de memória.\n");
 		return -1;
 	}
-	
-	inicializarMinhoca(minhoca);
-	Consumivel pos = gerarConsumivel(minhoca, tamanho);
+    
+    selecionarMenu();
+    inicializarMinhoca(minhoca);
+    pos = gerarConsumivel(minhoca, tamanho);
     
     // Loop do jogo.
 	while(jogar){
@@ -65,7 +71,7 @@ int main(){
 		
 		// Checar se a minhoca morreu após o movimento efetuado.
 	    if(checaMorte(minhoca, tamanho)){
-			jogar = selecionar();
+			jogar = selecionarReinicio();
 			if(jogar) reiniciaJogo(minhoca, &tamanho, &cont, &anterior);
 			continue;
 		}

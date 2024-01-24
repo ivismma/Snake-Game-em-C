@@ -6,7 +6,7 @@
 
 void inicializarMinhoca(Minhoca *minhoca){
 	// Inicializa a minhoca com uma cabeça dois segmentos.
-	minhoca->x = WIDTH/2;
+	minhoca->x = WIDTH/2+1;
     minhoca->y = 1+HEIGHT/2;
 	minhoca[1].x = minhoca->x; 
 	minhoca[1].y = minhoca->y-1;

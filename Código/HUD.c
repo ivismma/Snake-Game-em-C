@@ -1,60 +1,122 @@
-// FunÃ§Ãµes que gerenciam a interface textual do jogo.
+// Funções que gerenciam a interface textual do jogo.
 
 #include <ncurses/ncurses.h>
 
 #include "header.h"
 
-// Largura e comprimento do menu.
-#define L 28
-#define C 7
-#define INICIO 3
+// Largura e comprimento do menu inicial.
+#define L_M 34
+#define C_M 8
+// Largura e comprimento do menu de reinício.
+#define L_R 28
+#define C_R 7
+// Linhas do eixo x que contém a primeira escolha dos menus.
+#define INICIO_M 13
+#define INICIO_R 3
+
 
 void mostrarInfo(){
-	mvprintw(0,34,"Em desenvolvimento...");
-	mvprintw(2,34,"ImplementaÃ§Ãµes que ainda faltam:");
-	mvprintw(4,34,"adicionar sons de efeito (SFX) e outros.");
+	mvprintw(0,33,"Em desenvolvimento...");
 	
-	mvprintw(7,34,"ImplementaÃ§Ãµes jÃ¡ criadas:");
-	mvprintw(9,34,"GeraÃ§Ã£o do mapa, GeraÃ§Ã£o da maÃ§Ã£, definiÃ§Ã£o de paredes, colisÃ£o, ");
-	mvprintw(10,34,"transferir minhoca para lado oposto da colisÃ£o, proteÃ§Ã£o p/ entrada invÃ¡lida, ");
-	mvprintw(11,34,"impedir minhoca de poder andar para sentido contrÃ¡rio (morte), ");
-	mvprintw(12,34,"reinÃ­cio da rodada apÃ³s morte, sistema de pontuaÃ§Ã£o, mensagem de fim de jogo");
-	mvprintw(13,34,"e sistema que controla a trajetÃ³ria da minhoca (Vetor alocado dinamicamente).");
+	mvprintw(2,33,"Implementações já criadas:");
+	mvprintw(4,33,"Geração do mapa, Geração da maçã, definição de paredes, colisão, ");
+	mvprintw(5,33,"transferir minhoca para lado oposto da colisão, proteção p/ entrada inválida, ");
+	mvprintw(6,33,"impedir minhoca de poder andar para sentido contrário (morte), reinício da");
+	mvprintw(7,33,"rodada após morte, sistema de pontuação, seleção de tamanho do mapa, sistema ");
+	mvprintw(8,33,"que mostra prévia do mapa selecionada, e sistema que controlara a trajetória");
+	mvprintw(9,33,"da minhoca (Vetor alocado dinamicamente).");
+	
+	mvprintw(27,1,"Código criado por Ivis Muzi.");
 }
 
 void mostrarInfoStats(Minhoca *minhoca, int tamanho, int tamanhoM, int cont){
-	mvprintw(13,1,"Info. Ãºteis para teste:");
+	mvprintw(13,1,"Info. úteis para teste:");
 	mvprintw(15,1,"Movimentos: %d", cont);
-	mvprintw(16,1,"Tamanho:    %d (CabeÃ§a + %d segmentos)", tamanho, tamanho-1);
+	mvprintw(16,1,"Tamanho:    %d (Cabeça + %d segmentos)", tamanho, tamanho-1);
 	mvprintw(18,1,"Rabo da minhoca: (%d,%d)", minhoca[tamanho-1].x, minhoca[tamanho-1].y);
-	mvprintw(19,1,"CabeÃ§a: (%d,%d)", minhoca->x, minhoca->y);
-	mvprintw(20,1,"PosiÃ§Ã£o da comida: (%d,%d)", pos.x, pos.y);
-	mvprintw(21,1,"------------------------");
-	mvprintw(23,1,"Tamanho mÃ¡ximo atingido: %d", tamanhoM);
-	mvprintw(26,1,"MemÃ³ria alocada (*minhoca):   %zu bytes.", (WIDTH*HEIGHT)*sizeof(minhoca));
-	mvprintw(27,1,"MemÃ³ria utilizada (*minhoca): %zu bytes.", tamanhoM*sizeof(minhoca));
+	mvprintw(19,1,"Cabeça: (%d,%d)", minhoca->x, minhoca->y);
+	mvprintw(20,1,"Posição da comida: (%d,%d)", pos.x, pos.y);
+	mvprintw(21,1,"-------------------------------");
+	mvprintw(22,1,"Tamanho máximo atingido: %d", tamanhoM);
+	mvprintw(24,1,"Memória alocada (*minhoca):   %zu bytes.", (WIDTH*HEIGHT)*sizeof(minhoca));
+	mvprintw(25,1,"Memória utilizada (*minhoca): %zu bytes.", tamanhoM*sizeof(minhoca));
 }
 
-void mostrarMenu(){
-	for(int i = 0; i < C;++i) mvprintw(i, 0, "#");
-	for(int i = 1; i < C;++i) mvprintw(i, L-1, "#");
-	for(int i = 0; i < L;++i) mvprintw(0, i, "#");
-	for(int i = 1; i < L;++i) mvprintw(C-1, i, "#");
+void menuInicial(){
+	for(int i = 0; i < C_M;++i) mvprintw(i+10, 0, "#");
+	for(int i = 1; i < C_M;++i) mvprintw(i+10, L_M-1, "#");
+	for(int i = 0; i < L_M;++i) mvprintw(0+10, i, "#");
+	for(int i = 1; i < L_M;++i) mvprintw(C_M-1+10, i, "#");
 	
-	mvprintw(1, C/2, "Deseja jogar novamente?");
-	mvprintw(INICIO, L/2-1, "Sim");
-	mvprintw(INICIO+1, L/2-1, "NÃ£o");
+	mvprintw(11, C_M/2, "Escolha o tamanho do mapa: ");
+	mvprintw(INICIO_M, L_M/2-3, "Pequeno");
+	mvprintw(INICIO_M+1, L_M/2-3, "Médio");
+	mvprintw(INICIO_M+2, L_M/2-3, "Grande");
 }
 
-bool selecionar(){
+// Quando selecionando um mapa, mostrar uma prévia dele na direita do menu.
+//                                 0 - Pequeno | 1 - Médio | 2 - Grande 
+
+int selecionarMenu(){
 	int escolha = -1;
 	int linha = 0; // Inicia como Sim.
 	while(escolha != 10){
 		clear();
-		mostrarMenu();
+		menuInicial();
+		desenharParedes();
 		{     // Escolha atual.
-			mvprintw(INICIO+linha, 9, ">");
-			mvprintw(INICIO+linha, 19, "<");
+			mvprintw(INICIO_M+linha, 10, ">");
+			mvprintw(INICIO_M+linha, 23, "<");
+		}
+		escolha = getch();
+		switch(escolha){  // 0 e 2 são os extremos do menu, usa-se esses números para limitar a seleção.
+			case KEY_UP:
+				if(linha == 0) break;
+				--linha;
+				break;
+			case KEY_DOWN:
+				if(linha == 2) break;
+				++linha;
+				break;
+			case 10: // 10 <=> ENTER (ASCII).
+				break;
+		}
+		if(linha == 0){         // Pequeno
+			WIDTH = 14;
+			HEIGHT = 5;
+		}
+		else if(linha == 1){    // Médio
+			WIDTH = 20;
+			HEIGHT = 6;
+		}
+		else{                   // Grande
+			WIDTH = 25;
+			HEIGHT = 7;
+		}
+		refresh();
+	}
+}
+
+void menuReinicio(){
+	for(int i = 0; i < C_R;++i) mvprintw(i, 0, "#");
+	for(int i = 1; i < C_R;++i) mvprintw(i, L_R-1, "#");
+	for(int i = 0; i < L_R;++i) mvprintw(0, i, "#");
+	for(int i = 1; i < L_R;++i) mvprintw(C_R-1, i, "#");
+	
+	mvprintw(1, C_R/2, "Deseja jogar novamente?");
+	mvprintw(INICIO_R, L_R/2-1, "Sim");
+	mvprintw(INICIO_R+1, L_R/2-1, "Não");
+}
+
+bool selecionarReinicio(){
+	int escolha = -1;
+	int linha = 0; // Inicia como Sim.
+	while(escolha != 10){
+		clear();
+		menuReinicio();
+		{     // Escolha atual.
+			mvprintw(INICIO_R+linha, 9, ">");
+			mvprintw(INICIO_R+linha, 19, "<");
 		}
 		escolha = getch();
 		switch(escolha){
@@ -67,7 +129,7 @@ bool selecionar(){
 				++linha;
 				break;
 			case 10: // 10 <=> ENTER (ASCII).
-				if(INICIO+linha == 3) return true;
+				if(INICIO_R+linha == 3) return true;
 				return false;
 		}
 		refresh();
