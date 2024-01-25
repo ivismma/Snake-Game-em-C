@@ -7,36 +7,37 @@
 
 #include "header.h"
 
-// Variáveis globais
-Consumivel pos; //Posição atual da maçã
+// VariÃ¡veis globais
+Consumivel pos; //PosiÃ§Ã£o atual da maÃ§Ã£
 int WIDTH = 14; // Comprimento
 int HEIGHT = 5; // Largura
 
 int main(){
 	setlocale(LC_ALL, "pt_BR.UTF-8");
-	// Acentos e cedilhas funcionarão a depender do S.O e fatores externos envolvidos.
+	// Acentos e cedilhas funcionarÃ£o a depender do S.O e fatores externos envolvidos.
 	
-	// Funções biblioteca ncurses
+	// FunÃ§Ãµes biblioteca ncurses
     initscr();
     clear();
     noecho(); 
+    curs_set(0);
     keypad(stdscr, TRUE); // leitura das teclas
     
 	int direcao = KEY_DOWN;
 	int anterior = KEY_DOWN;
 	int tamanho = 3; // Tamanho da minhoca, inicia como 3.
-	int tamanhoM = 3; // Tamanho máximo atingido.
+	int tamanhoM = 3; // Tamanho mÃ¡ximo atingido.
 	int cont = 0; // Movimentos
 	bool jogar = true;
-	// Alocação de memória da minhoca.
+	// AlocaÃ§Ã£o de memÃ³ria da minhoca.
 	Minhoca *minhoca = (Minhoca*) calloc(WIDTH*HEIGHT, sizeof(Minhoca));
 	if(minhoca == NULL){
 		endwin();
-		fprintf(stderr, "Falha na alocação de memória.\n");
+		fprintf(stderr, "Falha na alocaÃ§Ã£o de memÃ³ria.\n");
 		return -1;
 	}
-    
-    //selecionarMenu();
+	
+    selecionarMenu();
     inicializarMinhoca(minhoca);
     pos = gerarConsumivel(minhoca, tamanho);
     
@@ -46,43 +47,42 @@ int main(){
 		desenharParedes();
 		desenharConsumivel(pos);
 		desenharMinhoca(minhoca, tamanho); // Segmentos
-		
 		mostrarInfo();
 		mostrarInfoStats(minhoca, tamanho, tamanhoM, cont);
 		
 		// Captar movimento:
 		int tecla;
-		do tecla = getch(); // Enquanto movimento for inválido.
+		do tecla = getch(); // Enquanto movimento for invÃ¡lido.
 		while(!checaMovimento(anterior, tecla)); 
 		
 		anterior = tecla;
 		++cont; // Movs.
 		usleep(10000);  // microsegundos
 		
-		// Posição do rabo (tail) da minhoca:
+		// PosiÃ§Ã£o atual do rabo (tail) da minhoca:
 		int tailX = minhoca[tamanho-1].x;
 		int tailY = minhoca[tamanho-1].y;
 		
-		// Computar tecla e verificar se próximo movimento terá colisão com parede.
-		bool colidiu = false;
-		colidiu = preComputarMovimento(tecla, minhoca, tamanho, &direcao);
+		// Computar tecla e verificar se prÃ³ximo movimento terÃ¡ colisÃ£o com parede.
+		bool colidiu = preComputarMovimento(tecla, minhoca, tamanho, &direcao);
 		if(!colidiu) movimentoNormal(direcao, minhoca, tamanho);
 		
-		// Checar se a minhoca morreu após o movimento efetuado.
+		// Checar se a minhoca morreu apÃ³s o movimento efetuado.
 	    if(checaMorte(minhoca, tamanho)){
 			jogar = selecionarReinicio(false);
 			if(jogar) reiniciaJogo(minhoca, &tamanho, &cont, &anterior);
 			continue;
 		}
-		// Checar se a minhoca comeu a maçã com o movimento efetuado e 
-		// checa se o vencedor comeu a última maçã do jogo (venceu).
+		
+		// Checar se a minhoca comeu a maÃ§Ã£ com o movimento efetuado e 
+		// checa se o vencedor comeu a Ãºltima maÃ§Ã£ do jogo (venceu).
     	if(checaSeComeu(minhoca, pos)){
         	crescerMinhoca(minhoca, &tamanho, tailX, tailY);
         	if(tamanho >= tamanhoM) tamanhoM = tamanho;
 			
-			// Checa se a minhoca não atingiu seu limite (não terminou o jogo).
+			// Checa se a minhoca nÃ£o atingiu seu limite (nÃ£o terminou o jogo).
 			if(tamanho != WIDTH*HEIGHT) pos = gerarConsumivel(minhoca, tamanho);
-			// Comeu a última maçã e venceu o jogo:
+			// Comeu a Ãºltima maÃ§Ã£ e venceu o jogo:
 			else{ 
 				jogar = selecionarReinicio(true); 
 				if(jogar) reiniciaJogo(minhoca, &tamanho, &cont, &anterior);
@@ -91,10 +91,11 @@ int main(){
         
 		refresh(); // Atualizar tela
 	}
-    
+	
     free(minhoca);
     endwin();
 	printf("Fim do jogo.\n");
     getch();
-    return 0;
+    
+	return 0;
 }
