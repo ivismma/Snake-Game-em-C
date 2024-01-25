@@ -44,8 +44,10 @@ Consumivel gerarConsumivel(Minhoca *minhoca, int tam){
 		pos.x = rand()%WIDTH + 1;     // Gerar coordenada dentro do mapa (+1 para evitar paredes).
 		pos.y = rand()%HEIGHT + 1;
 		for(int i = 0; i < tam; ++i){
-			if(pos.x == minhoca[i].x && pos.y == minhoca[i].y)
+			if(pos.x == minhoca[i].x && pos.y == minhoca[i].y){
 				disponivel = false; // Coordenada gerada está ocupada pela minhoca.
+				break;
+			}
 		}
 	} while(!disponivel);
 	// Retornar nova posição da maçã gerada.

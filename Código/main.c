@@ -14,14 +14,13 @@ int HEIGHT = 5; // Largura
 
 int main(){
 	setlocale(LC_ALL, "pt_BR.UTF-8");
-	// ACENTOS E CEDILHAS FUNCIONARÃO DEPENDER DO S.O USADO E OUTROS FATORES.
+	// Acentos e cedilhas funcionarão a depender do S.O e fatores externos envolvidos.
 	
 	// Funções biblioteca ncurses
     initscr();
     clear();
-    noecho();
-    curs_set(0); 
-    keypad(stdscr, TRUE); // leitura teclas especiais (Numpad)
+    noecho(); 
+    keypad(stdscr, TRUE); // leitura das teclas
     
 	int direcao = KEY_DOWN;
 	int anterior = KEY_DOWN;
@@ -37,7 +36,7 @@ int main(){
 		return -1;
 	}
     
-    selecionarMenu();
+    //selecionarMenu();
     inicializarMinhoca(minhoca);
     pos = gerarConsumivel(minhoca, tamanho);
     
@@ -71,15 +70,23 @@ int main(){
 		
 		// Checar se a minhoca morreu após o movimento efetuado.
 	    if(checaMorte(minhoca, tamanho)){
-			jogar = selecionarReinicio();
+			jogar = selecionarReinicio(false);
 			if(jogar) reiniciaJogo(minhoca, &tamanho, &cont, &anterior);
 			continue;
 		}
-		// Checar se a minhoca comeu a maçã com o movimento efetuado.
+		// Checar se a minhoca comeu a maçã com o movimento efetuado e 
+		// checa se o vencedor comeu a última maçã do jogo (venceu).
     	if(checaSeComeu(minhoca, pos)){
         	crescerMinhoca(minhoca, &tamanho, tailX, tailY);
-        	pos = gerarConsumivel(minhoca, tamanho);
         	if(tamanho >= tamanhoM) tamanhoM = tamanho;
+			
+			// Checa se a minhoca não atingiu seu limite (não terminou o jogo).
+			if(tamanho != WIDTH*HEIGHT) pos = gerarConsumivel(minhoca, tamanho);
+			// Comeu a última maçã e venceu o jogo:
+			else{ 
+				jogar = selecionarReinicio(true); 
+				if(jogar) reiniciaJogo(minhoca, &tamanho, &cont, &anterior);
+			}
         }
         
 		refresh(); // Atualizar tela

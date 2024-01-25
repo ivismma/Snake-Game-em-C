@@ -1,14 +1,14 @@
 #include <stdbool.h>
 
-// Struct que ser√° alocada din√¢micamente para conter as posi√ß≈ëes em que se encontram
-//  as partes da minhoca. Ser√° alocado (linha x colunas) espa√ßos no vetor din√¢mico 
-// (WIDTH*HEIGHT), a cabe√ßa da minhoca √© o primeiro √≠ndice do vetor.
+// Struct que ser· alocada din‚micamente para conter as posiÁoes em que se encontram
+//  as partes da minhoca. Ser· alocado (linha x colunas) espaÁos no vetor din‚mico 
+// (WIDTH*HEIGHT), a cabeÁa da minhoca È o primeiro Ìndice do vetor.
 
 typedef struct{
     int x, y;
 } Minhoca;
 
-typedef Minhoca Consumivel; // O consum√≠vel possui mesma estrutura (x e y).
+typedef Minhoca Consumivel; // O consumÌvel possui mesma estrutura (x e y).
 
 extern Consumivel pos;
 extern int WIDTH;
@@ -32,5 +32,5 @@ void mostrarInfoStats(Minhoca *minhoca, int tamanho, int tamanhoM, int cont);
 void menuReinicio();
 void menuInicial();
 int selecionarMenu();
-bool selecionarReinicio();
+bool selecionarReinicio(bool ganhou);
 void reiniciaJogo(Minhoca *minhoca, int *tamanho, int *cont, int *ant);
