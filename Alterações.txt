@@ -57,4 +57,11 @@ removidas as constantes de pré-processamento no "header.h".
 - Funções criadas: mostrarMenu() e selecionarMenu() no HUD.c
 - Renomeadas as funções do menu de reinício da partida.
 
-Jogo basicamente finalizado.
+25/01/2024:
+- Criada nova mensagem no menu de reinício caso o jogador vença o jogo.
+- Corrigido problema em que, ao vencer (comer todas as maçãs) o jogo entrava em loop infinito e travava 
+(na função geraConsumivel() ), onde o jogo buscava infinitamente uma nova coordenada para posicionar a maçã, 
+porém a minhoca já ocupou todos os espaços e venceu o jogo.
+> Solução: Verificar sempre que comer a maçã se o tamanho atual da minhoca corresponde ao tamanho da quantidade de
+Linhas x Colunas, se isto acontecer, terminar o jogo e exibir a nova mensagem.
+- Otimizada e melhorada a lógica da função geraConsumivel().
