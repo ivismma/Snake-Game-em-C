@@ -65,3 +65,8 @@ porém a minhoca já ocupou todos os espaços e venceu o jogo.
 > Solução: Verificar sempre que comer a maçã se o tamanho atual da minhoca corresponde ao tamanho da quantidade de
 Linhas x Colunas, se isto acontecer, terminar o jogo e exibir a nova mensagem.
 - Otimizada e melhorada a lógica da função geraConsumivel().
+
+28/05/2024:
+- Mudança do jogo de I/O based para loop contínuo. Resumindo: Jogo não depende mais das teclas para a cobrinha se mexer. O movimento
+é constante e as teclas apenas alteram o movimento.
+- Melhorado mecanismo de refresh da tela (troca da função clear() por erase() ).
