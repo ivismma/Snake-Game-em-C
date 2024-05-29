@@ -9,10 +9,10 @@
 
 void desenharParedes(){
 	// Paredes verticais
-	for(int i = 0; i < HEIGHT+1;++i) mvprintw(i, 0, "#");
+	for(int i = 1; i < HEIGHT+1;++i) mvprintw(i, 0, "#");
 	for(int i = 1; i < HEIGHT+1;++i) mvprintw(i, WIDTH+1, "#");
 	// Paredes horizontais
-	for(int i = 1; i < WIDTH+2;++i) mvprintw(0, i, "#");
+	for(int i = 0; i < WIDTH+2;++i) mvprintw(0, i, "#");
 	for(int i = 0; i < WIDTH+2;++i) mvprintw(HEIGHT+1, i, "#");
 }
 
